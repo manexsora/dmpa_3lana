@@ -160,7 +160,20 @@ services:
           - mosquitto
         networks:
             - sarea1
-          
+    kafdrop:
+        hostname: kafdrop
+        container_name: kafdrop
+        depends_on:
+            - kafka
+        ports:
+            - '9000:9000'
+        environment:
+            - 'KAFKA_BROKERCONNECT=kafka:9092'
+            - 'JVM_OPTS=-Xms32M -Xmx64M'
+            - SERVER_SERVLET_CONTEXT
+        image: obsidiandynamics/kafdrop
+        networks:
+            - sarea1
     publisher:
         hostname: publisher
         container_name: publisher
